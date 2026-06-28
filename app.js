@@ -4,6 +4,9 @@ const SHEET_WIDTH_MM = 297;
 const SHEET_HEIGHT_MM = 210;
 const STICKER_WIDTH_MM = 38;
 const STICKER_HEIGHT_MM = 48;
+const DUPLICATE_OFFSET_MM = 4;
+const THEMATIC_PAGE_OFFSET = 2;
+const SHEET_PAGE_SCALE_X = 1.0034;
 const DRAFT_KEY = 'albumBiblicoDraftV1';
 
 const IMPOSITION_SIDES = [
@@ -509,7 +512,7 @@ function renderSheetPage(pageNumber) {
   const mini = renderPageCanvas(page, false);
   mini.style.width = '148.5mm';
   mini.style.height = '210mm';
-  mini.style.transform = 'scale(1.0034)';
+  mini.style.transform = `scale(${SHEET_PAGE_SCALE_X})`;
   mini.style.transformOrigin = 'left top';
   mini.style.boxShadow = 'none';
   mini.style.border = 'none';
@@ -826,7 +829,12 @@ function addFiveStickers(page) {
 function duplicateSelectedSticker(page) {
   const slot = page.stickers.find((s) => s.id === state.selectedStickerId);
   if (!slot) return;
-  const duplicated = { ...slot, id: crypto.randomUUID(), x: Math.min(slot.x + 4, PAGE_WIDTH_MM - STICKER_WIDTH_MM), y: Math.min(slot.y + 4, PAGE_HEIGHT_MM - STICKER_HEIGHT_MM) };
+  const duplicated = {
+  ...slot,
+  id: crypto.randomUUID(),
+  x: Math.min(slot.x + DUPLICATE_OFFSET_MM, PAGE_WIDTH_MM - STICKER_WIDTH_MM),
+  y: Math.min(slot.y + DUPLICATE_OFFSET_MM, PAGE_HEIGHT_MM - STICKER_HEIGHT_MM)
+  };
   page.stickers.push(duplicated);
   state.selectedStickerId = duplicated.id;
   state.multiSelectedStickerIds = [duplicated.id];
@@ -969,8 +977,8 @@ function validateProject(album) {
   results.push({ ok: pages.length === 20, message: 'Todas as 20 páginas existem.' });
   results.push({ ok: sorted.every((p, i) => p.naturalNumber === i + 1), message: 'Páginas pares e ímpares estão corretas na ordem natural.' });
 
-  const page17 = pages.find((p) => p.naturalNumber === 19);
-  results.push({ ok: page17 && page17.stickers.length === 0, message: 'Página 17 (natural 19) não possui espaços de figurinhas.' });
+  const drawingPageNatural19 = pages.find((p) => p.naturalNumber === 19);
+  results.push({ ok: drawingPageNatural19 && drawingPageNatural19.stickers.length === 0, message: 'Página 17 (natural 19) não possui espaços de figurinhas.' });
 
   const expectedRanges = {
     4: [1, 5], 5: [6, 10], 6: [11, 15], 7: [16, 20], 8: [21, 25],
@@ -983,7 +991,7 @@ function validateProject(album) {
     const numbers = (page?.stickers || []).map((s) => Number(s.number)).sort((a, b) => a - b);
     const expected = Array.from({ length: end - start + 1 }, (_, i) => start + i);
     const ok = expected.length === numbers.length && expected.every((num, idx) => num === numbers[idx]);
-    results.push({ ok, message: `Página temática ${Number(pageNumber) - 2} possui figurinhas corretas (${start}-${end}).` });
+    results.push({ ok, message: `Página temática ${Number(pageNumber) - THEMATIC_PAGE_OFFSET} possui figurinhas corretas (${start}-${end}).` });
   });
 
   const allStickers = pages.flatMap((p) => p.stickers);
@@ -1013,7 +1021,7 @@ function validateProject(album) {
   const firstBack = IMPOSITION_SIDES[1];
   results.push({ ok: firstFront.right === 1, message: 'A capa aparece à direita na folha 1 frente.' });
   results.push({ ok: firstBack.left === 2, message: 'A contracapa interna aparece à esquerda na folha 1 verso.' });
-  results.push({ ok: firstBack.right === 19, message: 'A página 17 aparece à direita na folha 1 verso.' });
+  results.push({ ok: firstBack.right === 19, message: 'A página 17 (natural 19) aparece à direita na folha 1 verso.' });
   results.push({ ok: firstFront.left === 20, message: 'A capa traseira aparece à esquerda na folha 1 frente.' });
 
   return results;
