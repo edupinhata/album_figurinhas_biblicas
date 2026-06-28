@@ -75,7 +75,7 @@ const THEMATIC_CONTENT = [
   {
     title: 'Jesus, nosso melhor amigo',
     verses: 'João 3:16; Marcos 10:13-16; Lucas 24:1-7; João 14:1-3',
-    summary: 'Jesus é o Filho de Deus, que nos ama, morreu por nós, ressuscitou e voltará para buscar o time dEle.',
+    summary: 'Jesus é o Filho de Deus, que nos ama, morreu por nós, ressuscitou e voltará para buscar o time dele.',
     stickers: ['Jesus — especial', 'Jesus abraçando as crianças', 'Jesus ensinando', 'Jesus curando', 'Jesus acalmando a tempestade']
   },
   {
@@ -1021,7 +1021,7 @@ function validateProject(album) {
   const firstBack = IMPOSITION_SIDES[1];
   results.push({ ok: firstFront.right === 1, message: 'A capa aparece à direita na folha 1 frente.' });
   results.push({ ok: firstBack.left === 2, message: 'A contracapa interna aparece à esquerda na folha 1 verso.' });
-  results.push({ ok: firstBack.right === 19, message: 'A página 17 (natural 19) aparece à direita na folha 1 verso.' });
+  results.push({ ok: firstBack.right === 19, message: 'A página natural 19 aparece à direita na folha 1 verso.' });
   results.push({ ok: firstFront.left === 20, message: 'A capa traseira aparece à esquerda na folha 1 frente.' });
 
   return results;
