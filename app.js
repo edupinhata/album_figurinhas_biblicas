@@ -978,7 +978,7 @@ function validateProject(album) {
   results.push({ ok: sorted.every((p, i) => p.naturalNumber === i + 1), message: 'Páginas pares e ímpares estão corretas na ordem natural.' });
 
   const drawingPageNatural19 = pages.find((p) => p.naturalNumber === 19);
-  results.push({ ok: drawingPageNatural19 && drawingPageNatural19.stickers.length === 0, message: 'Página de desenho (página 17 / natural 19) não possui espaços de figurinhas.' });
+  results.push({ ok: drawingPageNatural19 && drawingPageNatural19.stickers.length === 0, message: 'Página natural 19 (desenho) não possui espaços de figurinhas.' });
 
   const expectedRanges = {
     4: [1, 5], 5: [6, 10], 6: [11, 15], 7: [16, 20], 8: [21, 25],
