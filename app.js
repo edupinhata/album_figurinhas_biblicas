@@ -5,8 +5,8 @@ const SHEET_HEIGHT_MM = 210;
 const STICKER_WIDTH_MM = 38;
 const STICKER_HEIGHT_MM = 48;
 const DUPLICATE_OFFSET_MM = 4;
-const THEMATIC_PAGE_OFFSET = 2;
 const SHEET_PAGE_SCALE_X = 1.0034;
+const FIRST_THEMATIC_NATURAL_PAGE = 4;
 const DRAFT_KEY = 'albumBiblicoDraftV1';
 
 const IMPOSITION_SIDES = [
@@ -153,7 +153,7 @@ function createInitialAlbum() {
 
   let stickerNumber = 1;
   THEMATIC_CONTENT.forEach((content, index) => {
-    const naturalNumber = 4 + index;
+    const naturalNumber = FIRST_THEMATIC_NATURAL_PAGE + index;
     const slots = defaultFiveSlots(stickerNumber, content.stickers);
     pages.push(makePage(naturalNumber, content.title, 'página temática', {
       textBlocks: [
@@ -978,7 +978,7 @@ function validateProject(album) {
   results.push({ ok: sorted.every((p, i) => p.naturalNumber === i + 1), message: 'Páginas pares e ímpares estão corretas na ordem natural.' });
 
   const drawingPageNatural19 = pages.find((p) => p.naturalNumber === 19);
-  results.push({ ok: drawingPageNatural19 && drawingPageNatural19.stickers.length === 0, message: 'Página 17 (natural 19) não possui espaços de figurinhas.' });
+  results.push({ ok: drawingPageNatural19 && drawingPageNatural19.stickers.length === 0, message: 'Página de desenho (página 17 / natural 19) não possui espaços de figurinhas.' });
 
   const expectedRanges = {
     4: [1, 5], 5: [6, 10], 6: [11, 15], 7: [16, 20], 8: [21, 25],
@@ -991,7 +991,7 @@ function validateProject(album) {
     const numbers = (page?.stickers || []).map((s) => Number(s.number)).sort((a, b) => a - b);
     const expected = Array.from({ length: end - start + 1 }, (_, i) => start + i);
     const ok = expected.length === numbers.length && expected.every((num, idx) => num === numbers[idx]);
-    results.push({ ok, message: `Página temática ${Number(pageNumber) - THEMATIC_PAGE_OFFSET} possui figurinhas corretas (${start}-${end}).` });
+    results.push({ ok, message: `Página natural ${pageNumber} possui figurinhas corretas (${start}-${end}).` });
   });
 
   const allStickers = pages.flatMap((p) => p.stickers);
