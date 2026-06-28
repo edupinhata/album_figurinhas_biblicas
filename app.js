@@ -830,10 +830,10 @@ function duplicateSelectedSticker(page) {
   const slot = page.stickers.find((s) => s.id === state.selectedStickerId);
   if (!slot) return;
   const duplicated = {
-  ...slot,
-  id: crypto.randomUUID(),
-  x: Math.min(slot.x + DUPLICATE_OFFSET_MM, PAGE_WIDTH_MM - STICKER_WIDTH_MM),
-  y: Math.min(slot.y + DUPLICATE_OFFSET_MM, PAGE_HEIGHT_MM - STICKER_HEIGHT_MM)
+    ...slot,
+    id: crypto.randomUUID(),
+    x: Math.min(slot.x + DUPLICATE_OFFSET_MM, PAGE_WIDTH_MM - STICKER_WIDTH_MM),
+    y: Math.min(slot.y + DUPLICATE_OFFSET_MM, PAGE_HEIGHT_MM - STICKER_HEIGHT_MM)
   };
   page.stickers.push(duplicated);
   state.selectedStickerId = duplicated.id;
