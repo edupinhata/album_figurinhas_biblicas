@@ -1,0 +1,258 @@
+:root {
+  color-scheme: light;
+  --bg: #f4f6fb;
+  --panel: #ffffff;
+  --line: #d5d9e6;
+  --accent: #0a58ca;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.toolbar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.75rem;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+
+.toolbar button,
+.toolbar select,
+.toolbar input {
+  font-size: 0.85rem;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 280px 1fr 320px;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  flex: 1;
+}
+
+.sidebar {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.75rem;
+  overflow: auto;
+}
+
+.page-item {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.page-item.active {
+  border-color: var(--accent);
+  background: #eef4ff;
+}
+
+.center-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.stage-nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+#canvas-host {
+  width: 100%;
+  min-height: 75vh;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0.75rem;
+  background: #e9edf7;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.page-canvas {
+  width: 148mm;
+  height: 210mm;
+  position: relative;
+  background: #fff;
+  border: 1px solid #aeb6cd;
+  box-shadow: 0 8px 28px rgba(15, 32, 68, 0.2);
+  overflow: hidden;
+}
+
+.page-canvas.grid {
+  background-image: linear-gradient(to right, rgba(30, 60, 140, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 60, 140, 0.1) 1px, transparent 1px);
+  background-size: 5mm 5mm;
+}
+
+.page-canvas .background-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.page-canvas .background-layer img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.safe-margin {
+  position: absolute;
+  border: 1px dashed #ca6702;
+  pointer-events: none;
+}
+
+.text-block {
+  position: absolute;
+  padding: 2mm;
+  min-width: 15mm;
+  cursor: text;
+  white-space: pre-wrap;
+  outline: none;
+}
+
+.text-block.selected {
+  border: 1px dashed #3a86ff;
+}
+
+.sticker-slot {
+  position: absolute;
+  width: 38mm;
+  height: 48mm;
+  border: 1.2px dashed #3d405b;
+  background: rgba(255, 255, 255, 0.84);
+  padding: 1.5mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  user-select: none;
+  cursor: move;
+}
+
+.sticker-slot.locked {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.sticker-slot.selected {
+  border: 2px solid #f77f00;
+}
+
+.sticker-number {
+  font-size: 3.5mm;
+  font-weight: 700;
+}
+
+.sticker-caption {
+  font-size: 2.8mm;
+}
+
+.sheet-canvas {
+  width: 297mm;
+  height: 210mm;
+  position: relative;
+  border: 1px solid #aeb6cd;
+  background: #fff;
+  display: flex;
+  box-shadow: 0 8px 28px rgba(15, 32, 68, 0.2);
+}
+
+.sheet-page {
+  width: 148.5mm;
+  height: 210mm;
+  border-right: 1px dashed #9da5be;
+  position: relative;
+  overflow: hidden;
+}
+
+.sheet-page:last-child {
+  border-right: none;
+}
+
+.panel-title {
+  margin: 0 0 0.5rem;
+}
+
+.row {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.row label {
+  flex: 1;
+  font-size: 0.82rem;
+}
+
+.row input,
+.row textarea,
+.row select,
+.row button {
+  width: 100%;
+  font-size: 0.82rem;
+}
+
+.group {
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #e6e8f2;
+}
+
+.sticker-list {
+  max-height: 180px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  padding: 0.35rem;
+}
+
+.validation {
+  background: #fff;
+  border-top: 1px solid var(--line);
+  padding: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.validation ul {
+  margin: 0;
+}
+
+.pass { color: #2b9348; }
+.fail { color: #c1121f; }
+
+.print-warning {
+  background: #fff3cd;
+  border: 1px solid #ffe69c;
+  color: #664d03;
+  padding: 0.45rem;
+  border-radius: 4px;
+}
+
+@media (max-width: 1260px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+}
