@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editor de Álbum Bíblico Infantil</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="app">
+      <header class="toolbar">
+        <button id="btn-save-json">Salvar projeto</button>
+        <button id="btn-load-json">Carregar projeto</button>
+        <button id="btn-export-page">Exportar página (PNG)</button>
+        <button id="btn-export-sheet">Exportar folha A4 (PNG)</button>
+        <button id="btn-export-pdf">Exportar folhas A4 (PDF)</button>
+        <label>
+          Ordem
+          <select id="order-mode">
+            <option value="natural">Natural</option>
+            <option value="print">Imposição</option>
+          </select>
+        </label>
+        <label>
+          Visualização
+          <select id="view-mode">
+            <option value="page">Página</option>
+            <option value="sheet">Folha A4</option>
+          </select>
+        </label>
+        <button id="btn-toggle-grid">Mostrar/Ocultar grade</button>
+        <button id="btn-toggle-safe">Mostrar/Ocultar margens seguras</button>
+        <button id="btn-validate">Validar projeto</button>
+      </header>
+
+      <main class="workspace">
+        <aside class="sidebar" id="pages-sidebar"></aside>
+
+        <section class="center-stage">
+          <div class="stage-nav">
+            <button id="btn-prev">◀</button>
+            <span id="stage-label"></span>
+            <button id="btn-next">▶</button>
+          </div>
+          <div id="canvas-host"></div>
+          <p class="print-warning">Imprimir em A4, tamanho real / escala 100%. Não usar &ldquo;ajustar à página&rdquo;.</p>
+        </section>
+
+        <aside class="sidebar" id="properties-sidebar"></aside>
+      </main>
+
+      <section class="validation" id="validation-report"></section>
+    </div>
+
+    <input id="json-file-input" type="file" accept="application/json" hidden />
+    <input id="bg-file-input" type="file" accept="image/*" hidden />
+  </body>
+</html>
